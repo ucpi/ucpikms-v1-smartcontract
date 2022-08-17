@@ -16,6 +16,12 @@ pub struct Contractdetail {
     pub owner: String,
     pub idtype: String,
 }
+#[derive(Serialize, Deserialize, Clone, Debug, PartialEq)]
+pub struct Mainkey{
+    pub key:String,
+    pub token:String,
+    pub verified:bool,
+}
 
 
 #[derive(Serialize, Deserialize, Clone, Debug, PartialEq)]

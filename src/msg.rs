@@ -14,6 +14,16 @@ pub struct InitMsg {
 #[serde(rename_all = "snake_case")]
 pub enum HandleMsg {
     // add HandleMsg types here
+    Votefor{
+        owner:String,
+        token:String,
+        vote:bool,
+    },
+    Addkey{
+    key:String,
+        token:String,
+
+    }
 }
 
 #[derive(Serialize, Deserialize, Clone, Debug, PartialEq, JsonSchema)]
@@ -27,7 +37,12 @@ pub enum QueryMsg {
 #[derive(Serialize, Deserialize, Debug, JsonSchema)]
 #[serde(rename_all = "snake_case")]
 pub enum HandleAnswer {
-    // add HandleMsg response types here
+// add HandleMsg response types here
+Addkey{
+    status:bool,
+    msg:String,
+    verified:bool,
+}
 }
 
 /// Responses from query function
@@ -38,5 +53,6 @@ pub enum QueryAnswer {
         owner: String,
          idtype: String,
     }
+    
     // add QueryMsg response types here
 }
