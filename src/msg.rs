@@ -30,7 +30,15 @@ pub enum HandleMsg {
 #[serde(rename_all = "snake_case")]
 pub enum QueryMsg {
     // add QueryMsg types here
-    Getcontractdetail {}
+    Getcontractdetail {},
+    Getvoting{
+        jwt:String,
+
+    },
+    Nodevot{
+        jwt:String,
+        nodeadress:String, 
+     }
 }
 
 /// Responses from handle function
@@ -42,6 +50,10 @@ Addkey{
     status:bool,
     msg:String,
     verified:bool,
+},
+Vote{
+    msg:String,
+    
 }
 }
 
@@ -52,7 +64,13 @@ pub enum QueryAnswer {
     Contractdetail {
         owner: String,
          idtype: String,
+    },
+    Voting{
+        numyvote:i32,
+        numnovote:i32,
+    },
+    Nodevte{
+        agree:bool,
     }
-    
     // add QueryMsg response types here
 }

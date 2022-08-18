@@ -22,7 +22,22 @@ pub struct Mainkey{
     pub token:String,
     pub verified:bool,
 }
-
+#[derive(Serialize, Deserialize, Clone, Debug, PartialEq)]
+pub struct token{
+    pub jwt:String,
+    pub numyvotes:i32,
+    pub numnovotes:i32,
+}
+#[derive(Serialize, Deserialize, Clone, Debug, PartialEq)]
+pub struct nodevote{
+    pub voteres:bool,
+}
+#[derive(Serialize, Deserialize, Clone, Debug, PartialEq)]
+pub struct vote{
+    pub key:String,
+    pub token:String,
+    pub verified:bool,
+}
 
 #[derive(Serialize, Deserialize, Clone, Debug, PartialEq)]
 pub struct Reminder {
