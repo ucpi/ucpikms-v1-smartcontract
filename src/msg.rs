@@ -14,16 +14,21 @@ pub struct InitMsg {
 #[serde(rename_all = "snake_case")]
 pub enum HandleMsg {
     // add HandleMsg types here
-    Votefor{
-        owner:String,
+    Votefor{    
         token:String,
         vote:bool,
     },
     Addkey{
     key:String,
         token:String,
-
+    },
+    login{
+        jw:String,
+        vk:String,
     }
+
+
+
 }
 
 #[derive(Serialize, Deserialize, Clone, Debug, PartialEq, JsonSchema)]
@@ -53,7 +58,9 @@ Addkey{
 },
 Vote{
     msg:String,
-    
+},
+addlogin{
+    msg:String,
 }
 }
 

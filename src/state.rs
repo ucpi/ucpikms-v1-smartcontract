@@ -38,6 +38,11 @@ pub struct vote{
     pub token:String,
     pub verified:bool,
 }
+#[derive(Serialize, Deserialize, Clone, Debug, PartialEq)]
+pub struct viewkey{
+    pub key:String,
+    pub token:String,
+}
 
 #[derive(Serialize, Deserialize, Clone, Debug, PartialEq)]
 pub struct Reminder {
