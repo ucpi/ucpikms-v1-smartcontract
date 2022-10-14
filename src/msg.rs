@@ -43,7 +43,11 @@ pub enum QueryMsg {
     Nodevot{
         jwt:String,
         nodeadress:String, 
-     }
+     },
+     Showkey{
+      vik:String,
+     },
+ 
 }
 
 /// Responses from handle function
@@ -78,6 +82,10 @@ pub enum QueryAnswer {
     },
     Nodevte{
         agree:bool,
+    },
+    Kyy{
+        msg:String,
+        key:String,
     }
     // add QueryMsg response types here
 }

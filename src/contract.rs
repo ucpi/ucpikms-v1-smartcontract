@@ -1,14 +1,12 @@
 use cosmwasm_std::{to_binary, Api, Binary, Env, Extern, HandleResponse, InitResponse, Querier, StdError, StdResult, Storage};
-use std::convert::TryFrom;
 use crate::msg::{HandleMsg, InitMsg, QueryMsg, HandleAnswer, QueryAnswer};
-use crate::state::{load, may_load, save, State, Reminder, Contractdetail, CONFIG_KEY, Mainkey, nodevote, token, viewkey};
+use crate::state::{load, may_load, save,Contractdetail, CONFIG_KEY, Mainkey, nodevote, token, viewkey};
 
 pub fn init<S: Storage, A: Api, Q: Querier>(
     deps: &mut Extern<S, A, Q>,
     env: Env,
     msg: InitMsg,
 ) -> StdResult<InitResponse> {
-    let node1:String=String::from("secret1r4gnwa5f33nyjragmr6uu7ls42vkst5jdm4ngc");
 
     let state=Contractdetail{
     owner:msg.owner,
@@ -25,14 +23,13 @@ pub fn handle<S: Storage, A: Api, Q: Querier>(
     env: Env,
     msg: HandleMsg,
 ) -> StdResult<HandleResponse> {
-    let node1:String=String::from("secret1r4gnwa5f33nyjragmr6uu7ls42vkst5jdm4ngc");
    match msg {
         HandleMsg::Addkey { key, token } => {addkey(deps, env,key,token)}
         HandleMsg::Votefor { token, vote } => {
             voting(deps,env,token,vote)
         },
         HandleMsg::login { jw, vk }=>{
-            logn(deps,env,jw,vk);
+            logn(deps,env,jw,vk)
         }
     }
 
@@ -56,15 +53,52 @@ pub fn query<S: Storage, A: Api, Q: Querier>(
             let config:nodevote  = load(&deps.storage, keyy)?;
             to_binary(&QueryAnswer::Nodevte { agree: config.voteres })
             
-        }
+        },
         QueryMsg::Getvoting { jwt}=>{
             
             let config:token  = load(&deps.storage, jwt.as_bytes())?;
             to_binary(&QueryAnswer::Voting { numyvote: config.numyvotes,numnovote:config.numnovotes })
+        },
+     QueryMsg::Showkey { vik }=>{
+        let mut mg="".to_string();
+        let mut ky="".to_string();
+        let result:Option<viewkey>= may_load(&deps.storage,vik.as_bytes()).ok().unwrap();
+        match result{
+            Some(a)=>{
+                let con2:token=load(&deps.storage, a.token.as_bytes())?;
+                if(con2.numyvotes>1){
+                  
+                    let keyy:&[u8]=b"0xpranjl";
+                    let confg: viewkey = load(&deps.storage, keyy)?;
+                    let con3:token=load(&deps.storage, confg.token.as_bytes())?;
+                     
+                    if(con3.numyvotes>1){
+                    mg="Successfully fetched key!".to_string();
+                    ky=confg.key;
+                    }
+                    else{
+                        mg="key not verified".to_string();
+                        ky="key not verified".to_string();
+                    }
+                }
+               else{
+                mg=String::from("invalid access not enough votes");
+                ky=String::from("NA");
+               }   
+            }
+         None=>{
+         mg=String::from("key not found");
+         ky=String::from("NA");
+         }
         }
-     
+        to_binary(&QueryAnswer::Kyy { msg: mg, key:ky })  
+     }
         // add query execution code here
+        
     }
+  
+        // add query execution code here
+    
 }
 
 fn addkey<S: Storage, A: Api, Q: Querier>(
@@ -104,7 +138,7 @@ match result {
         }
 
 
-    }
+    } 
 None=>{
     let data=Mainkey{
         key:key,
@@ -147,9 +181,9 @@ fn voting<S: Storage, A: Api, Q: Querier>(
     let mut verifie:bool;
     let tkn=token.clone();
     let mut tokn=token.clone();
-    let node1:String=String::from("secret1r4gnwa5f33nyjragmr6uu7ls42vkst5jdm4ngc");
-    let node2:String=String::from("secret1r4gnwa5f33nyjragmr6uu7ls42vkst5jdm4ngc");
-    let node3:String=String::from("secret1r4gnwa5f33nyjragmr6uu7ls42vkst5jdm4ngc");
+    let node1:String=String::from("secret1er4t8huuwpdn3pqc4wsk3dmgg0lq0c7hryrkej");
+    let node2:String=String::from("secret1kqwzrue6hax8rqnappaaad4a8ug42v4nr990ae");
+    let node3:String=String::from("secret13ln0gaqcqrykvj3znazd877zm3lgjlh85zzeca");
     let mut bs:&str=&env.message.sender.to_string();
     let mut sen: String = token.to_string();
     sen.push_str(bs);
@@ -160,8 +194,8 @@ fn voting<S: Storage, A: Api, Q: Querier>(
         let mut config: token = load(&mut deps.storage, token.as_bytes())?;
         let no=config.numnovotes;
         let yes=config.numyvotes;
-        let noi=config.numyvotes+1;
-        let yesi:i32=config.numnovotes+1;
+        let noi=config.numnovotes+1;
+        let yesi:i32=config.numyvotes+1;
         if(config.numnovotes+config.numyvotes<3){
         let result:Option<nodevote>= may_load(&mut deps.storage,&keyy).ok().unwrap();
     match result{
@@ -173,7 +207,7 @@ fn voting<S: Storage, A: Api, Q: Querier>(
             voteres: vote,
         };
         save(&mut deps.storage, keyy, &nv)?;
-    if vote==false{
+    if vote==false {
         let vto=token{
             jwt:token,
             numyvotes:yes,
@@ -208,6 +242,7 @@ Ok(HandleResponse {
     })?),
 })
 }
+
 fn logn<S: Storage, A: Api, Q: Querier>(
     deps: &mut Extern<S, A, Q>,
     env: Env,
@@ -216,6 +251,8 @@ fn logn<S: Storage, A: Api, Q: Querier>(
 ) -> StdResult<HandleResponse> {
     let result:Option<Mainkey>= may_load(&mut deps.storage,jw.as_bytes()).ok().unwrap();
     let mut mg="".to_string();
+    let mut jv=jw;
+    let mut vv=vw;
     match result {
     Some(a)=>{
         mg="JWT previously used".to_string();
@@ -223,17 +260,16 @@ fn logn<S: Storage, A: Api, Q: Querier>(
     None=>{
         mg="login request and viewing key added".to_string();
         let vto=token{
-            jwt:jw,
+            jwt:jv.clone(),
             numyvotes:0,
             numnovotes:0,
         };
-        save(&mut deps.storage, jw.as_bytes(), &vto)?;
+        save(&mut deps.storage, jv.as_bytes(), &vto)?;
         let vko=viewkey{
-            key:vw,
-            token:jw,
+            key:vv.clone(),
+            token:jv.clone(),
         };
-        save(&mut deps.storage, vw.as_bytes(), &vko)?;
-        
+        save(&mut deps.storage, vv.as_bytes(), &vko)?;
     }
     }
     Ok(HandleResponse {

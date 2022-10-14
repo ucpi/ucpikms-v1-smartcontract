@@ -2,8 +2,14 @@ INIT="{\"owner\":\"ram@universe\",\"idtype\":\"universal\"}"
 AK="{\"addkey\":{\"key\":\"hanumanji\",\"token\":\"1112cc1a19ca49970b1989d92bc9babbcb433a6d17efcea0d496f7b325ff3683\"}}"
 secretcli tx compute execute $CONTRACT "$AK" --from sn1
 NV="{\"nodevot\":{\"jwt\":\"1112cc1a19ca49970b1989d92bc9babbcb433a6d17efcea0d496f7b325ff3683\",\"nodeadress\":\"secret1r4gnwa5f33nyjragmr6uu7ls42vkst5jdm4ngc\"}}"
-VF="{\"votefor\":{\"owner\":\"ram@universe\",\"token\":\"1112cc1a19ca49970b1989d92bc9babbcb433a6d17efcea0d496f7b325ff3683\",\"vote\":true}}"
+VF="{\"votefor\":{\"owner\":\"ram@universe\",\"token\":\"1112cc1a19ca49970b1989d92bc9babbcb433a6d17efcea0d496f7b325ff368\",\"vote\":true}}"
 secretcli tx compute execute $CONTRACT "$VF" --from sn1
-GV="{\"getvoting\":{\"jwt\":\"1112cc1a19ca49970b1989d92bc9babbcb433a6d17efcea0d496f7b325ff3683\"}}"
+GV="{\"getvoting\":{\"jwt\":\"1112cc1a19ca49970b1989d92bc9babbcb433a6d17efcea0d496f7b325ff368\"}}"
 secretcli q compute query "$CONTRACT" "$GV" 
- secretcli tx compute instantiate $CODE_ID "$INIT" --from sn1 --label "ram7" -y
+ secretcli tx compute instantiate $CODE_ID "$INIT" --from sn1 --label "ram9" -y
+GK="{\"showkey\":{\"vik\":\"1112cc1a19ca49970b1989d92bc9babbcb433a6d17efcea0d496f7b325ff3683\",\"vk\":\"shivi\"}}"
+SKK="{\"skey\":{\"vik\":\"shivi\"}}"
+CKK="{\"showkey\":{\"vik\":\"shivi\"}}"
+SK="{\"login\":{\"jw\":\"1112cc1a19ca49970b1989d92bc9babbcb433a6d17efcea0d496f7b325ff368\",\"vk\":\"shivi\"}}"
+GK="{\"showkey\":{\"vik\":\"1112cc1a19ca49970b1989d92bc9babbcb433a6d17efcea0d496f7b325ff368\",\"vk\":\"shivi\"}}"
+V="{\"vote\":{\"msg\":\"1112cc1a19ca49970b1989d92bc9babbcb433a6d17efcea0d496f7b325ff368\"}}"
